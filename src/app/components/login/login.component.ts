@@ -7,8 +7,9 @@ import {
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
-import { AuthService } from '../../services/auth.service';
+import { AuthService } from '../../services/auth/auth.service';
 import { CommonModule } from '@angular/common';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-login',
@@ -24,7 +25,7 @@ export class LoginComponent {
   showLoginForm: boolean = true;
   showCreateAccountForm: boolean = false;
 
-  constructor(private fb: FormBuilder, private authService: AuthService) {}
+  constructor(private fb: FormBuilder, private authService: AuthService, private router: Router) {}
 
   ngOnInit() {
     this.loginForm = this.fb.group({
@@ -38,7 +39,7 @@ export class LoginComponent {
         surname: ['', Validators.required],
         birth: ['', Validators.required],
         newUsername: ['', [Validators.required, Validators.email]],
-        newPassword: ['', Validators.required],
+        newPassword: ['', [Validators.required, Validators.minLength(8)]],
         confirmPassword: ['', Validators.required],
       },
       { validators: this.passwordsMatchValidator }
@@ -66,6 +67,7 @@ export class LoginComponent {
           console.error(result.error);
         } else {
           console.log(result);
+          this.router.navigate(['/dashboard']);
         }
       });
     }
@@ -77,30 +79,15 @@ export class LoginComponent {
       return;
     }
 
-    const { newUsername, newPassword } = this.createAccountForm.value;
-
     this.authService
       .createAccount(this.createAccountForm)
       .subscribe((result) => {
         if (result.error) {
           console.error(result.error);
+          return
         } else {
           console.log(result);
-        }
-      });
-
-    const loginCredentials = this.fb.group({
-      username: [newUsername, Validators.required],
-      password: [newPassword, Validators.required],
-    });
-
-    this.authService
-      .authenticateUser(loginCredentials)
-      .subscribe((loginResult) => {
-        if (loginResult.error) {
-          console.error(loginResult.error);
-        } else {
-          console.log('Login bem sucedido após criar conta');
+          this.router.navigate(['/dashboard']);
         }
       });
   }
