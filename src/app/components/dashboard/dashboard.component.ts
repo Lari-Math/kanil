@@ -25,4 +25,8 @@ export class DashboardComponent {
     }
   }
 
+  logout(){
+    this.userService.logout();
+  }
+
 }
