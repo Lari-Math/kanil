@@ -72,12 +72,12 @@ export class LoginComponent {
   }
 
   onCreateAccountSubmit() {
-    const { newUsername, newPassword, confirmPassword } = this.createAccountForm.value;
-
-    if (newPassword !== confirmPassword) {
-      console.error("Senha e confirmação de senha não coincidem");
+    if (this.createAccountForm.invalid) {
+      console.log(this.createAccountForm.errors)
       return;
     }
+
+    const { newUsername, newPassword } = this.createAccountForm.value;
 
     this.authService
       .createAccount(this.createAccountForm)
@@ -104,5 +104,4 @@ export class LoginComponent {
         }
       });
   }
-
 }
