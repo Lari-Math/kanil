@@ -72,18 +72,23 @@ export class LoginComponent {
   }
 
   onCreateAccountSubmit() {
+    const { newUsername, newPassword, confirmPassword } = this.createAccountForm.value;
+
+    if (newPassword !== confirmPassword) {
+      console.error("Senha e confirmação de senha não coincidem");
+      return;
+    }
+
     this.authService
       .createAccount(this.createAccountForm)
       .subscribe((result) => {
         if (result.error) {
           console.error(result.error);
         } else {
-          //console.log(result);
+          console.log(result);
         }
       });
-    console.log('Create account form submitted');
 
-    const { newUsername, newPassword } = this.createAccountForm.value;
     const loginCredentials = this.fb.group({
       username: [newUsername, Validators.required],
       password: [newPassword, Validators.required],
@@ -95,8 +100,9 @@ export class LoginComponent {
         if (loginResult.error) {
           console.error(loginResult.error);
         } else {
-          console.log('Login bem sucedido após criar conta:', loginResult);
+          console.log('Login bem sucedido após criar conta');
         }
       });
   }
+
 }
