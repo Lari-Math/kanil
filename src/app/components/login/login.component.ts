@@ -1,3 +1,4 @@
+import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import {
   AbstractControl,
@@ -5,11 +6,10 @@ import {
   FormGroup,
   FormsModule,
   ReactiveFormsModule,
-  Validators,
+  Validators
 } from '@angular/forms';
-import { AuthService } from '../../services/auth/auth.service';
-import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
+import { AuthService } from '../../services/auth/auth.service';
 
 @Component({
   selector: 'app-login',
@@ -74,7 +74,8 @@ export class LoginComponent {
   }
 
   onCreateAccountSubmit() {
-    if (this.createAccountForm.errors) {
+
+    if (this.createAccountForm.invalid) {
       console.log(this.createAccountForm.errors)
       return;
     }

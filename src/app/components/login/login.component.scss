@@ -25,6 +25,12 @@
         font-size: 14px;
         margin-top: 5px;
         font-weight: 500;
+        &-short-key {
+          color: red;
+          font-size: 12px;
+          margin-top: 5px;
+          font-weight: 500;
+        }
       }
 
       input {

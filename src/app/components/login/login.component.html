@@ -59,6 +59,9 @@
         formControlName="newPassword"
         required
       />
+      <div class="form-group" *ngIf="createAccountForm.get('newPassword')?.hasError('minlength') && createAccountForm.get('newPassword')?.touched">
+        <span class="error-message-short-key">Senha deve conter no mínimo 8 caracteres</span>
+      </div>
     </div>
     <div class="form-group">
       <label for="confirmPassword">Confirme a Senha:</label>
@@ -70,7 +73,7 @@
       />
       <div
         class="form-group"
-        *ngIf="createAccountForm.hasError('passwordsNotMatch')"
+        *ngIf="createAccountForm.hasError('passwordsNotMatch') && createAccountForm.get('confirmPassword')?.touched"
       >
         <span class="error-message">Senhas não condizem</span>
       </div>
