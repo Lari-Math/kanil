@@ -74,8 +74,7 @@ export class LoginComponent {
   }
 
   onCreateAccountSubmit() {
-
-    if (this.createAccountForm.invalid) {
+    if (this.createAccountForm.errors) {
       console.log(this.createAccountForm.errors)
       return;
     }
@@ -92,4 +91,5 @@ export class LoginComponent {
         }
       });
   }
+
 }
